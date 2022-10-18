@@ -3,7 +3,7 @@ import index from '../../store/index';
 
 
 var api = axios.create({
-    baseURL: `http://localhost:8000/api`,
+    baseURL: `https://mybizness.herokuapp.com/api`,
     headers: {
         'Authorization': 'Bearer '+ localStorage.getItem('token'),
         'Content-Type': 'application/json',

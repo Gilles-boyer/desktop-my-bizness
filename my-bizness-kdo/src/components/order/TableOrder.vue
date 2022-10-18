@@ -17,7 +17,8 @@
               @closeModalVoucher="dialogVoucher = false"
             />
             <v-col cols="12" md="9" sm="12" xl="9"
-              ><v-toolbar-title>Liste des commandes</v-toolbar-title></v-col
+              > <v-toolbar-title> <v-btn icon @click="initOrders()"><v-icon>mdi-refresh</v-icon></v-btn> Liste des commandes</v-toolbar-title>
+              </v-col
             >
             <v-col cols="12" md="3" sm="12" xl="3"><dialogOrder/></v-col>
           </v-row>
@@ -68,7 +69,7 @@
         </v-icon>
       </template>
       <template v-slot:no-data>
-        <v-btn color="primary"> Reset </v-btn>
+        <v-btn color="primary" @click="initOrders()"> Reset </v-btn>
       </template>
       <template v-slot:item.validity="{ item }">
         <v-chip
