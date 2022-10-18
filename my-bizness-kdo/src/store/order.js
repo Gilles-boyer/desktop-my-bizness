@@ -1,7 +1,6 @@
 import apiOrder from "../services/axios/order";
 import apiVoucher from "../services/axios/voucher";
 import index from "./index";
-import axios from "axios";
 
 export default {
   state: {

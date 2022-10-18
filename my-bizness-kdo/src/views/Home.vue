@@ -1,41 +1,60 @@
 <template>
   <v-container fluid style="background-color: #04153b" fill-height>
-    <h2 class="mx-auto white--text"> Bienvenue Gilles BOYER, </h2>
+    <h2 class="mx-auto white--text">Bienvenue {{ user.name }},</h2>
     <v-row justify="center" align-content="center">
       <v-col cols="11" sm="7" md="4" xl="3">
-        <v-card class="pa-4 login" elevation="4" shaped>     
-          <v-card class="mx-auto pa-6 text-center" fluid shaped elevation="0" >
+        <v-card class="pa-4 login" elevation="4" shaped>
+          <v-card class="mx-auto pa-6 text-center" fluid shaped elevation="0">
             <v-icon size="60" color="primary">mdi-qrcode</v-icon>
             <v-card-title class="text-center primary--text ml-4"
               >Nombre de bon cadeau Validé</v-card-title
             >
-            <v-progress-circular :size="200" :width="20" :value="100" color="primary" class="mx-auto">
-              <h1 class="primary--text">50</h1> 
+            <v-progress-circular
+              :size="200"
+              :width="20"
+              :value="100"
+              color="primary"
+              class="mx-auto"
+            >
+              <h1 class="primary--text">{{ user.nbrGiftCheck }}</h1>
             </v-progress-circular>
           </v-card>
         </v-card>
       </v-col>
       <v-col cols="11" sm="7" md="4" xl="3">
         <v-card class="pa-4 login" elevation="4" shaped>
-          <v-card class="mx-auto pa-6 text-center" fluid shaped elevation="0" >
+          <v-card class="mx-auto pa-6 text-center" fluid shaped elevation="0">
             <v-icon size="60" color="teal">mdi-store-check</v-icon>
             <v-card-title class="text-center teal--text ml-4"
               >Nombre de bon cadeau Vendu</v-card-title
             >
-            <v-progress-circular :size="200" :width="20" :value="100" color="teal" class="mx-auto">
-              <h1 class="teal--text">50</h1> 
+            <v-progress-circular
+              :size="200"
+              :width="20"
+              :value="100"
+              color="teal"
+              class="mx-auto"
+            >
+              <h1 class="teal--text">{{ user.nbrGiftSell }}</h1>
             </v-progress-circular>
           </v-card>
         </v-card>
       </v-col>
       <v-col cols="11" sm="7" md="4" xl="3">
         <v-card class="pa-4 login" elevation="4" shaped>
-          <v-card class="mx-auto pa-6 text-center" fluid shaped elevation="0" >
+          <v-card class="mx-auto pa-6 text-center" fluid shaped elevation="0">
             <v-icon size="60" color="red">mdi-cash-multiple</v-icon>
             <v-card-title class="text-center red--text ml-4"
-              >Montant Total des bons vendus</v-card-title>
-            <v-progress-circular :size="200" :width="20" :value="100" color="red" class="mx-auto">
-              <h1 class="red--text">50</h1> 
+              >Montant Total des bons vendus</v-card-title
+            >
+            <v-progress-circular
+              :size="200"
+              :width="20"
+              :value="100"
+              color="red"
+              class="mx-auto"
+            >
+              <h1 class="red--text">{{ user.totalSell }}</h1>
             </v-progress-circular>
           </v-card>
         </v-card>
@@ -55,13 +74,14 @@
 </style>
   
   <script>
-import { mapActions } from "vuex";
+import apiUser from "../services/axios/user";
 
 export default {
   data() {
     return {
       valid: true,
       show: false,
+      user: {},
       loginData: {
         email: "",
         password: "",
@@ -82,13 +102,18 @@ export default {
     };
   },
 
+  mounted() {
+    this.init();
+  },
+
   methods: {
-    ...mapActions(["login"]),
-    validate() {
-      if (this.$refs.form.validate()) {
-        console.log(this.loginData);
-        // this.login(this.loginData);
-      }
+    init() {
+      apiUser
+        .getStat()
+        .then((res) => {
+          this.user = res.data.data;
+        })
+        .catch((err) => console.log(err.toString()));
     },
   },
 };

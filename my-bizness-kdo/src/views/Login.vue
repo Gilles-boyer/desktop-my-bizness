@@ -76,8 +76,7 @@ export default {
     validate () {
       if(this.$refs.form.validate())
       {
-        console.log(this.loginData)
-        // this.login(this.loginData);
+        this.login(this.loginData);
       }
     },
   }

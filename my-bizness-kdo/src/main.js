@@ -31,6 +31,11 @@ ipcRenderer.on("GoToOrder", function () {
   }
 });
 
+//logout
+ipcRenderer.on("GoToLogout", function () {
+  Store.commit("SET_LOGOUT");
+});
+
 new Vue({
   router,
   store,

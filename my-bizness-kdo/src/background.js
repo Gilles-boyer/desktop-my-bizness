@@ -6,8 +6,6 @@ import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
-
-
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } },
@@ -67,9 +65,15 @@ const template = [
   {
     label: "Fichier",
     submenu: [
-      { 
-        label: "Dev", 
-        role: "toggleDevTools" 
+      {
+        label: "Dev",
+        role: "toggleDevTools",
+      },
+      {
+        label: "Se déconnecter",
+        click(menuItem, browserWindow, event) {
+          browserWindow.webContents.send("GoToLogout");
+        },
       },
       {
         label: "Fermer",
@@ -78,9 +82,9 @@ const template = [
           window.close();
         },
       },
-      // { 
-      //   label: "Quitter", 
-      //   role: "quit" 
+      // {
+      //   label: "Quitter",
+      //   role: "quit"
       // },
     ],
   },
@@ -90,14 +94,14 @@ const template = [
       {
         label: "Créer un bon Cadeau",
         click(menuItem, browserWindow, event) {
-          browserWindow.webContents.send('ShowMyModal');
-        }
+          browserWindow.webContents.send("ShowMyModal");
+        },
       },
       {
         label: "Voir les commandes",
         click(menuItem, browserWindow, event) {
-          browserWindow.webContents.send('GoToOrder');
-        }
+          browserWindow.webContents.send("GoToOrder");
+        },
       },
     ],
   },
@@ -107,8 +111,8 @@ const template = [
       {
         label: "Voir mes stats",
         click(menuItem, browserWindow, event) {
-          browserWindow.webContents.send('GoToHome');
-        }
+          browserWindow.webContents.send("GoToHome");
+        },
       },
     ],
   },
@@ -129,7 +133,6 @@ const template = [
     ],
   },
 ];
-
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
